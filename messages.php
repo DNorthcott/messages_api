@@ -1,10 +1,15 @@
 <?php
-
+/*
+ * Restful API for adding messages to a cache.
+ * On acess cache removes files that have been stored
+ * for longer than 30 seconds.
+ */
 
 //Remove files greater than 30 seconds.
 clearOldFiles(time());
 
 
+//Check sever request method and complete required processes.
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     if (!isset($_POST["id"]) || !isset($_POST["message"])) {
@@ -55,7 +60,11 @@ function clearOldFiles($currentTime)
     }
 
 }
-
+/*
+ * Creates a new cache file with the ID as file name
+ * and message as content of the file.
+ *
+ */
 function addMessage($id, $message)
 {
 
@@ -67,7 +76,11 @@ function addMessage($id, $message)
 
 }
 
-
+/*
+ * Returns the message associated with the parameter ID.
+ * If no ID match is acquired, an error message is returned.
+ * If found message/id returned in JSON format.
+ */
 function getMessage($id)
 {
 
@@ -99,6 +112,9 @@ function getMessage($id)
     }
 }
 
+/*
+ * Prefixes the file name with the correct folder.
+ */
 function createFileName($id)
 {
     return $fileName = "messagesCache/" . $id . ".txt";
